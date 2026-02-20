@@ -1,0 +1,107 @@
+import React, { useState } from 'react'
+import { Link, Outlet, useLocation } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+const AdminLayout = () => {
+    const [sidebarOpen, setSidebarOpen] = useState(true)
+    const location = useLocation()
+
+    const menus = [
+        { 
+            icon: 'dashboard-line', 
+            label: 'Dashboard', 
+            href: '/admin/dashboard',
+            active: location.pathname === '/admin/dashboard'
+        },
+        { 
+            icon: 'shopping-bag-line', 
+            label: 'Products', 
+            href: '/admin/products',
+            active: location.pathname.includes('/admin/products')
+        },
+        { 
+            icon: 'user-line', 
+            label: 'Users', 
+            href: '/admin/users',
+            active: location.pathname === '/admin/users'
+        }
+    ]
+
+    return (
+        <div className="min-h-screen bg-gray-100">
+            {/* Sidebar */}
+            <aside 
+                className="fixed top-0 left-0 h-full bg-gradient-to-b from-indigo-900 via-purple-800 to-blue-900 text-white transition-all duration-300"
+                style={{ width: sidebarOpen ? '280px' : '80px' }}
+            >
+                {/* Logo */}
+                <div className="p-6 flex items-center gap-3">
+                    {sidebarOpen ? (
+                        <h2 className="text-xl font-bold animate__animated animate__fadeIn">Admin Panel</h2>
+                    ) : (
+                        <i className="ri-admin-line text-2xl mx-auto"></i>
+                    )}
+                </div>
+
+                {/* User Info */}
+                {sidebarOpen && (
+                    <div className="px-6 mb-8 animate__animated animate__fadeIn">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                                <i className="ri-user-fill text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 className="font-medium">Admin User</h3>
+                                <p className="text-xs text-gray-300">admin@example.com</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Navigation */}
+                <nav className="mt-8">
+                    {menus.map((item, index) => (
+                        <Link
+                            key={index}
+                            to={item.href}
+                            className={`flex items-center gap-4 px-6 py-3 hover:bg-white/10 transition ${
+                                item.active ? 'bg-white/10 border-l-4 border-white' : ''
+                            }`}
+                        >
+                            <i className={`ri-${item.icon} text-xl`}></i>
+                            {sidebarOpen && <span className="capitalize">{item.label}</span>}
+                        </Link>
+                    ))}
+
+                    <button
+                        className="w-full flex items-center gap-4 px-6 py-3 hover:bg-white/10 transition mt-4 text-gray-300"
+                    >
+                        <i className="ri-logout-box-line text-xl"></i>
+                        {sidebarOpen && <span>Logout</span>}
+                    </button>
+                </nav>
+
+                {/* Toggle Button */}
+                <button
+                    onClick={() => setSidebarOpen(!sidebarOpen)}
+                    className="absolute -right-3 top-20 bg-white text-indigo-900 rounded-full w-6 h-6 flex items-center justify-center shadow-lg"
+                >
+                    <i className={`ri-arrow-${sidebarOpen ? 'left' : 'right'}-s-line`}></i>
+                </button>
+            </aside>
+
+            {/* Main Content */}
+            <main 
+                className="p-8 transition-all duration-300"
+                style={{ marginLeft: sidebarOpen ? '280px' : '80px' }}
+            >
+                <Outlet />
+            </main>
+
+            <ToastContainer position="top-center" />
+        </div>
+    )
+}
+
+export default AdminLayout
