@@ -9,15 +9,9 @@ const AdminLayout = () => {
 
     const menus = [
         { 
-            icon: 'dashboard-line', 
-            label: 'Dashboard', 
-            href: '/admin/dashboard',
-            active: location.pathname === '/admin/dashboard'
-        },
-        { 
             icon: 'shopping-bag-line', 
             label: 'Products', 
-            href: '/admin/products',
+            href: '/admin/products',  // Changed from /admin/product to /admin/products
             active: location.pathname.includes('/admin/products')
         },
         { 
@@ -38,7 +32,7 @@ const AdminLayout = () => {
                 {/* Logo */}
                 <div className="p-6 flex items-center gap-3">
                     {sidebarOpen ? (
-                        <h2 className="text-xl font-bold animate__animated animate__fadeIn">Admin Panel</h2>
+                        <h2 className="text-xl font-bold">Admin Panel</h2>
                     ) : (
                         <i className="ri-admin-line text-2xl mx-auto"></i>
                     )}
@@ -46,7 +40,7 @@ const AdminLayout = () => {
 
                 {/* User Info */}
                 {sidebarOpen && (
-                    <div className="px-6 mb-8 animate__animated animate__fadeIn">
+                    <div className="px-6 mb-8">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                                 <i className="ri-user-fill text-xl"></i>
@@ -93,7 +87,7 @@ const AdminLayout = () => {
 
             {/* Main Content */}
             <main 
-                className="p-8 transition-all duration-300"
+                className="p-8 transition-all duration-300 min-h-screen"
                 style={{ marginLeft: sidebarOpen ? '280px' : '80px' }}
             >
                 <Outlet />

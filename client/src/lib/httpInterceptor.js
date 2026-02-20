@@ -1,8 +1,8 @@
-import axios, { HttpStatusCode } from "axios"
+import axios from "axios"
 
 const httpInterceptor = axios.create({
-    baseURL: "http://localhost:5173/api",
+    baseURL: 'http://localhost:8080/api', // Make sure this matches your backend port
     withCredentials: true
 })
 
-export default HttpStatusCode
+export default httpInterceptor

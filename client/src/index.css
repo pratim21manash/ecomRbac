@@ -8,3 +8,19 @@
     @apply bg-gray-100;
   }
 }
+
+
+
+
+/* Toast customizations */
+.Toastify__toast {
+  @apply rounded-lg font-medium;
+}
+
+.Toastify__toast--success {
+  @apply bg-green-600;
+}
+
+.Toastify__toast--error {
+  @apply bg-red-600;
+}
